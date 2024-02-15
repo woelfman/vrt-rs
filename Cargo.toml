@@ -10,7 +10,7 @@ authors = ["Blair Gillam <ns1h@airmada.net>"]
 categories = ["parser-implementations"]
 edition = "2021"
 readme = "README.md"
-publish = false
+publish = true
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

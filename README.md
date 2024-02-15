@@ -2,7 +2,7 @@
 
 [![Crates.io Version](https://img.shields.io/crates/v/vrt.svg)](https://crates.io/crates/vrt)
 [![Documentation](https://docs.rs/vrt/badge.svg)](https://docs.rs/vrt)
-![GitHub License](https://img.shields.io/github/license/littleairmada/vrt-rs)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![CI Status](https://github.com/littleairmada/vrt-rs/actions/workflows/ci.yml/badge.svg)](https://github.com/littleairmada/vrt-rs/actions/workflows/ci.yml)
 
 A library for interacting with systems supporting VITA Radio Transport (VRT). The crate is a work in progress.
