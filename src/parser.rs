@@ -1,5 +1,5 @@
 use crate::vrt::*;
-use nom::number::streaming::be_u8;
+use nom::number::streaming::{be_u32, be_u64, be_u8};
 use nom::{Err, IResult, Needed};
 
 fn u8_to_bool(v: u8) -> bool {
@@ -116,4 +116,78 @@ pub fn parse_vrt_trailer(i: &[u8]) -> IResult<&[u8], Trailer> {
         associated_context_packet_count: associated_context_packet_count_value,
     };
     Ok((i, hdr))
+}
+
+/// Parses the VRT packet
+pub fn parse_vrt_packet(i: &[u8]) -> IResult<&[u8], VrtPacket<'_>> {
+    let (i, header) = parse_vrt_header(i)?;
+
+    let expected_size = header.packet_size as usize * size_of::<u32>();
+    let actual_size = i.len() + size_of::<u32>();
+    if actual_size < expected_size {
+        return Err(Err::Incomplete(Needed::new(expected_size)));
+    }
+
+    // Track the mandatory and optional fields to get the payload length
+    let mut payload_len = expected_size;
+    payload_len -= size_of::<u32>(); // header word
+    if header.t {
+        payload_len -= size_of::<u32>(); // trailer word
+    }
+
+    let (i, stream_id) = if matches!(
+        header.packet_type,
+        VitaPacketType::IFDATAWITHSTREAM | VitaPacketType::EXTDATAWITHSTREAM
+    ) {
+        let (i, stream_id) = be_u32(i)?;
+        payload_len -= size_of_val(&stream_id);
+        (i, Some(stream_id))
+    } else {
+        (i, None)
+    };
+
+    let (i, class_id) = if header.c {
+        let (i, class_id) = be_u64(i)?;
+        payload_len -= size_of_val(&class_id);
+        (i, Some(class_id))
+    } else {
+        (i, None)
+    };
+
+    let (i, tsi) = if header.tsi == Tsi::TSI_NONE {
+        (i, None)
+    } else {
+        let (i, tsi) = be_u32(i)?;
+        payload_len -= size_of_val(&tsi);
+        (i, Some(tsi))
+    };
+
+    let (i, tsf) = if header.tsf == Tsf::TSF_NONE {
+        (i, None)
+    } else {
+        let (i, tsf) = be_u64(i)?;
+        payload_len -= size_of_val(&tsf);
+        (i, Some(tsf))
+    };
+
+    let (data_payload, i) = i.split_at(payload_len);
+
+    let (i, trailer) = if header.t {
+        let (i, trailer) = parse_vrt_trailer(i)?;
+        (i, Some(trailer))
+    } else {
+        (i, None)
+    };
+
+    let packet = VrtPacket {
+        header,
+        stream_id,
+        class_id,
+        tsi,
+        tsf,
+        data_payload,
+        trailer,
+    };
+
+    Ok((i, packet))
 }

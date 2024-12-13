@@ -15,17 +15,17 @@ pub struct VitaPacketType(pub u8);
 
 impl VitaPacketType {
     /// IFDATA is a standard IFDATA packet.
-    pub const IFDATA: u8 = 0x00;
+    pub const IFDATA: VitaPacketType = VitaPacketType(0x00);
     /// IFDATAWITHSTREAM is a standard IFDATA packet with a packet stream.
-    pub const IFDATAWITHSTREAM: u8 = 0x01;
+    pub const IFDATAWITHSTREAM: VitaPacketType = VitaPacketType(0x01);
     /// EXTDATA is a custom Extension Data packet.
-    pub const EXTDATA: u8 = 0x02;
+    pub const EXTDATA: VitaPacketType = VitaPacketType(0x02);
     /// EXTDATAWITHSTREAM is a custom Extension Data packet with a packet stream.
-    pub const EXTDATAWITHSTREAM: u8 = 0x03;
+    pub const EXTDATAWITHSTREAM: VitaPacketType = VitaPacketType(0x03);
     /// IFCONTEXT is a standard IFCONTEXT packet with a context packet stream.
-    pub const IFCONTEXT: u8 = 0x04;
+    pub const IFCONTEXT: VitaPacketType = VitaPacketType(0x04);
     /// EXTCONTEXT is a custom Extension packet with a context packet stream.
-    pub const EXTCONTEXT: u8 = 0x05;
+    pub const EXTCONTEXT: VitaPacketType = VitaPacketType(0x05);
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, NomBE)]
