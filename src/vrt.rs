@@ -15,17 +15,17 @@ pub struct VitaPacketType(pub u8);
 
 impl VitaPacketType {
     /// IFDATA is a standard IFDATA packet.
-    pub const IFDATA: VitaPacketType = VitaPacketType(0x00);
+    pub const IFDATA: u8 = 0x00;
     /// IFDATAWITHSTREAM is a standard IFDATA packet with a packet stream.
-    pub const IFDATAWITHSTREAM: VitaPacketType = VitaPacketType(0x01);
+    pub const IFDATAWITHSTREAM: u8 = 0x01;
     /// EXTDATA is a custom Extension Data packet.
-    pub const EXTDATA: VitaPacketType = VitaPacketType(0x02);
+    pub const EXTDATA: u8 = 0x02;
     /// EXTDATAWITHSTREAM is a custom Extension Data packet with a packet stream.
-    pub const EXTDATAWITHSTREAM: VitaPacketType = VitaPacketType(0x03);
+    pub const EXTDATAWITHSTREAM: u8 = 0x03;
     /// IFCONTEXT is a standard IFCONTEXT packet with a context packet stream.
-    pub const IFCONTEXT: VitaPacketType = VitaPacketType(0x04);
+    pub const IFCONTEXT: u8 = 0x04;
     /// EXTCONTEXT is a custom Extension packet with a context packet stream.
-    pub const EXTCONTEXT: VitaPacketType = VitaPacketType(0x05);
+    pub const EXTCONTEXT: u8 = 0x05;
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, NomBE)]
@@ -34,13 +34,13 @@ pub struct Tsi(pub u8);
 
 impl Tsi {
     /// No integer-seconds timestamp field.
-    pub const TSI_NONE: Tsi = Tsi(0);
+    pub const TSI_NONE: u8 = 0;
     /// Integer-seconds timestamp field is a Coordinated Universal Time (UTC).
-    pub const TSI_UTC: Tsi = Tsi(1);
+    pub const TSI_UTC: u8 = 1;
     /// Integer-seconds timestamp field is a GPS time.
-    pub const TSI_GPS: Tsi = Tsi(2);
+    pub const TSI_GPS: u8 = 2;
     /// Integer-seconds timestamp field is in another format.
-    pub const TSI_OTHER: Tsi = Tsi(3);
+    pub const TSI_OTHER: u8 = 3;
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, NomBE)]
