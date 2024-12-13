@@ -136,7 +136,7 @@ pub fn parse_vrt_packet(i: &[u8]) -> IResult<&[u8], VrtPacket<'_>> {
     }
 
     let (i, stream_id) = if matches!(
-        header.packet_type,
+        header.packet_type.0,
         VitaPacketType::IFDATAWITHSTREAM | VitaPacketType::EXTDATAWITHSTREAM
     ) {
         let (i, stream_id) = be_u32(i)?;
@@ -154,7 +154,7 @@ pub fn parse_vrt_packet(i: &[u8]) -> IResult<&[u8], VrtPacket<'_>> {
         (i, None)
     };
 
-    let (i, tsi) = if header.tsi == Tsi::TSI_NONE {
+    let (i, tsi) = if header.tsi.0 == Tsi::TSI_NONE {
         (i, None)
     } else {
         let (i, tsi) = be_u32(i)?;
