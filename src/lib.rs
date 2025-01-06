@@ -9,6 +9,7 @@
 //! parser combinator framework.
 //!
 
+#![no_std]
 #![deny(
     missing_docs,
     unstable_features,
@@ -25,10 +26,11 @@
     no_crate_inject,
     attr(deny(warnings, rust_2018_idioms), allow(dead_code, unused_variables))
 ))]
-#![cfg_attr(not(feature = "std"), no_std)]
 
-mod parser;
-mod vrt;
+mod error;
+mod types;
 
-pub use parser::*;
-pub use vrt::*;
+pub use error::Error;
+pub use types::*;
+
+pub use nom_derive::Parse;
