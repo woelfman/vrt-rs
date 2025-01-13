@@ -116,7 +116,7 @@ fn test_parse_vrt_packet() {
     const FLEX_RADIO_OUI: u32 = 0x001C2D;
     let oui = res.class_id.map(|v| v.oui);
     assert_eq!(oui, Some(FLEX_RADIO_OUI));
-    assert_eq!(res.data_payload, b"discovery_protocol_version=3.0.0.1 model=FLEX-6700 serial=1121-1104-6700-2912 version=3.2.39.3374 nickname=PSOC2/HF/AMP callsign=W4BR ip=192.168.0.11 port=4992 status=Available inuse_ip= inuse_host= max_licensed_version=v3 radio_license_id=00-1C-2D-02-0F-EA requires_additional_license=0 fpc_mac= wan_connected=1 licensed_clients=2 available_clients=2 max_panadapters=8 available_panadapters=8 max_slices=8 available_slices=8 gui_client_ips= gui_client_hosts= gui_client_programs= gui_client_stations= gui_client_handles=\0\0\0");
+    assert_eq!(res.payload, b"discovery_protocol_version=3.0.0.1 model=FLEX-6700 serial=1121-1104-6700-2912 version=3.2.39.3374 nickname=PSOC2/HF/AMP callsign=W4BR ip=192.168.0.11 port=4992 status=Available inuse_ip= inuse_host= max_licensed_version=v3 radio_license_id=00-1C-2D-02-0F-EA requires_additional_license=0 fpc_mac= wan_connected=1 licensed_clients=2 available_clients=2 max_panadapters=8 available_panadapters=8 max_slices=8 available_slices=8 gui_client_ips= gui_client_hosts= gui_client_programs= gui_client_stations= gui_client_handles=\0\0\0");
 }
 
 #[rstest]

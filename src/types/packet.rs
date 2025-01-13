@@ -20,7 +20,7 @@ pub struct VrtPacket<'a> {
     /// Optional Fractional-Seconds Timestamp
     pub tsf: Option<u64>,
     /// Data Payload
-    pub data_payload: &'a [u8],
+    pub payload: &'a [u8],
     /// Optional VRT Packet Trailer
     pub trailer: Option<Trailer>,
 }
@@ -93,7 +93,7 @@ impl VrtPacket<'_> {
             class_id,
             tsi,
             tsf,
-            data_payload,
+            payload: data_payload,
             trailer,
         };
 
