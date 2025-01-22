@@ -1,7 +1,7 @@
 //! [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 //! [![Crates.io Version](https://img.shields.io/crates/v/vrt.svg)](https://crates.io/crates/vrt)
 //! [![Github CI](https://github.com/littleairmada/vrt-rs/actions/workflows/ci.yml/badge.svg)](https://github.com/littleairmada/vrt-rs/actions)
-//! [![Minimum rustc version](https://img.shields.io/badge/rustc-1.76.0+-lightgray.svg)](#rust-version-requirements)
+//! [![Minimum rustc version](https://img.shields.io/badge/rustc-1.80.0+-lightgray.svg)](#rust-version-requirements)
 //!
 //! # A VRT parser/encoder library for Rust
 //!
