@@ -1,7 +1,7 @@
 //! [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 //! [![Crates.io Version](https://img.shields.io/crates/v/vrt.svg)](https://crates.io/crates/vrt)
 //! [![Github CI](https://github.com/littleairmada/vrt-rs/actions/workflows/ci.yml/badge.svg)](https://github.com/littleairmada/vrt-rs/actions)
-//! [![Minimum rustc version](https://img.shields.io/badge/rustc-1.76.0+-lightgray.svg)](#rust-version-requirements)
+//! [![Minimum rustc version](https://img.shields.io/badge/rustc-1.80.0+-lightgray.svg)](#rust-version-requirements)
 //!
 //! # A VRT parser/encoder library for Rust
 //!
@@ -9,6 +9,7 @@
 //! parser combinator framework.
 //!
 
+#![no_std]
 #![deny(
     missing_docs,
     unstable_features,
@@ -25,10 +26,11 @@
     no_crate_inject,
     attr(deny(warnings, rust_2018_idioms), allow(dead_code, unused_variables))
 ))]
-#![cfg_attr(not(feature = "std"), no_std)]
 
-mod parser;
-mod vrt;
+mod error;
+mod types;
 
-pub use parser::*;
-pub use vrt::*;
+pub use error::Error;
+pub use types::*;
+
+pub use nom_derive::Parse;
