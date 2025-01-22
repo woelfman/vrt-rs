@@ -23,7 +23,7 @@ fn main() -> std::io::Result<()> {
         // Send a reply back to the source
         match VrtPacket::parse(&buf[..len]) {
             Ok((_rest, packet)) => {
-                println!("Received packet: {:?}", String::from_utf8_lossy(&packet.payload));
+                println!("Received packet: {:?}", String::from_utf8_lossy(packet.payload));
             }
             Err(e) => {
                 println!("Failed to parse packet: {:?}", e);
