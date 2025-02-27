@@ -29,7 +29,7 @@ impl Header {
         }
 
         let (i, first_byte) = be_u8(i)?;
-        let packet_type = PktType::try_from(first_byte >> 4 & 0b1111)
+        let packet_type = PktType::try_from((first_byte >> 4) & 0b1111)
             .map_err(|_| Err::Error(nom::error::Error::new(i, nom::error::ErrorKind::Verify)))?;
         let c = ((first_byte >> 3) & 0x01) != 0;
         let t = ((first_byte >> 2) & 0x01) != 0;
