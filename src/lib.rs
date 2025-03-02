@@ -32,5 +32,3 @@ mod types;
 
 pub use error::Error;
 pub use types::*;
-
-pub use nom_derive::Parse;
