@@ -1,4 +1,7 @@
-use nom::{number::streaming::be_u8, Err, IResult, Needed};
+use nom::{
+    number::streaming::{be_u16, be_u8},
+    Err, IResult, Needed,
+};
 
 use super::*;
 
@@ -41,9 +44,7 @@ impl Header {
             .map_err(|_| Err::Error(nom::error::Error::new(i, nom::error::ErrorKind::Verify)))?;
         let packet_count: u8 = (second_byte) & 0xf;
 
-        let (i, third_byte) = be_u8(i)?;
-        let (i, fourth_byte) = be_u8(i)?;
-        let packet_size: u16 = (third_byte + fourth_byte) as u16;
+        let (i, packet_size) = be_u16(i)?;
 
         let hdr = Header {
             packet_type,
