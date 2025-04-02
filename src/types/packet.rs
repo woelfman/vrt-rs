@@ -8,7 +8,7 @@ use crate::Error;
 use super::*;
 
 /// VRT Packet
-#[derive(Debug, PartialEq)]
+#[derive(Debug, Default, PartialEq)]
 pub struct VrtPacket<'a> {
     /// VRT Packet Header
     pub header: Header,
@@ -101,7 +101,32 @@ impl VrtPacket<'_> {
         Ok((i, packet))
     }
 
-    /// Serialize the VRT packet
+    /// Serialize the VITA-49 packet into the provided buffer.
+    ///
+    /// # Arguments
+    ///
+    /// * `buffer` - The buffer to serialize the packet into.
+    ///
+    /// # Returns
+    ///
+    /// * `Ok(usize)` - The number of bytes written to the buffer.
+    /// * `Err(Error)` - An error if the buffer is too small or if serialization fails.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use vrt::VrtPacket;
+    ///
+    /// let mut packet = VrtPacket::default();
+    /// // Set the fields of the packet as needed
+    /// // packet.header.packet_type = ...;
+    /// let mut buffer = [0u8; 1024]; // Ensure the buffer is large enough
+    ///
+    /// match packet.serialize(&mut buffer) {
+    ///    Ok(size) => println!("Serialized {} bytes", size),
+    ///    Err(e) => eprintln!("Error: {:?}", e),
+    /// }
+    /// ```
     pub fn serialize(&mut self, buffer: &mut [u8]) -> Result<usize, Error> {
         let mut offset = 0;
 

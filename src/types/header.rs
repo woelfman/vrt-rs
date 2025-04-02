@@ -8,7 +8,7 @@ use crate::Error;
 use super::*;
 
 /// VRT Packet Header
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
 pub struct Header {
     /// VRT Packet Type
     pub packet_type: PktType,
