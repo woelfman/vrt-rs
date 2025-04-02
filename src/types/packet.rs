@@ -3,6 +3,8 @@ use nom::{
     Err, IResult, Needed,
 };
 
+use crate::Error;
+
 use super::*;
 
 /// VRT Packet
@@ -97,5 +99,50 @@ impl VrtPacket<'_> {
         };
 
         Ok((i, packet))
+    }
+
+    /// Serialize the VRT packet
+    pub fn serialize(&mut self, buffer: &mut [u8]) -> Result<usize, Error> {
+        let mut offset = 0;
+
+        offset += self.header.serialize(&mut buffer[offset..])?;
+        if let Some(stream_id) = self.stream_id {
+            if buffer.len() < offset + size_of::<u32>() {
+                return Err(Error::BufferFull);
+            }
+            buffer[offset..offset + size_of::<u32>()].copy_from_slice(&stream_id.to_be_bytes());
+            offset += size_of::<u32>();
+        }
+        if let Some(class_id) = self.class_id {
+            offset += class_id.serialize(&mut buffer[offset..])?;
+        }
+        if let Some(tsi) = self.tsi {
+            if buffer.len() < offset + size_of_val(&tsi) {
+                return Err(Error::BufferFull);
+            }
+            buffer[offset..offset + size_of_val(&tsi)].copy_from_slice(&tsi.to_be_bytes());
+            offset += size_of_val(&tsi);
+        }
+        if let Some(tsf) = self.tsf {
+            if buffer.len() < offset + size_of_val(&tsf) {
+                return Err(Error::BufferFull);
+            }
+            buffer[offset..offset + size_of_val(&tsf)].copy_from_slice(&tsf.to_be_bytes());
+            offset += size_of_val(&tsf);
+        }
+        if buffer.len() < offset + self.payload.len() {
+            return Err(Error::BufferFull);
+        }
+        buffer[offset..offset + self.payload.len()].copy_from_slice(self.payload);
+        offset += self.payload.len();
+        if let Some(trailer) = self.trailer {
+            offset += trailer.serialize(&mut buffer[offset..])?;
+        }
+
+        // Serialize the header again to update the packet size
+        self.header.packet_size = (offset / size_of::<u32>()).try_into()?;
+        let _ = self.header.serialize(&mut buffer[0..])?;
+
+        Ok(offset)
     }
 }
